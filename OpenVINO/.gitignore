@@ -1,0 +1,5 @@
+venv/
+*.pt
+*_openvino_model/
+kernel.errors.txt
+__pycache__
