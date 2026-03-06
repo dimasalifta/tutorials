@@ -24,14 +24,14 @@ Download the latest release from [FRP GitHub Releases](https://github.com/fatedi
 Example for `amd64`:
 
 ```bash
-wget https://github.com/fatedier/frp/releases/download/v0.56.0/frp_0.56.0_linux_amd64.tar.gz
+wget https://github.com/fatedier/frp/releases/download/v0.67.0/frp_0.67.0_linux_amd64.tar.gz
 ```
 
 Extract:
 
 ```bash
-tar -xzf frp_0.56.0_linux_amd64.tar.gz
-cd frp_0.56.0_linux_amd64
+tar -xzf frp_0.67.0_linux_amd64.tar.gz
+cd frp_0.67.0_linux_amd64
 ```
 
 Copy binaries to system path:
