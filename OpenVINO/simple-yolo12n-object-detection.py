@@ -17,7 +17,7 @@ while True:
     if not ret:
         break
 
-    results = model.predict(frame, conf=0.25, iou=0.7, max_det=80, verbose=False)
+    results = model.predict(frame, conf=0.25, iou=0.7, max_det=80, verbose=True)
     r = results[0]
 
     boxes = r.boxes
