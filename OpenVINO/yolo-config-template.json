@@ -1,0 +1,8 @@
+{
+  "model_path": "yolo12n.pt",
+  "conf_thesh": 0.8,
+  "iou_thesh": 0.8,
+  "max_det": 80,
+  "imgsz": 640,
+  "verbose": false
+}

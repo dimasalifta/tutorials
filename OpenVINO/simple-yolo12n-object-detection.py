@@ -1,17 +1,28 @@
 import cv2
 from utils.openvino_utils import OpenVINOYOLODetector
+import json
 
-model = OpenVINOYOLODetector("train9/weights/best.pt")
+with open("yolo-config.json", "r") as f:
+    config = json.load(f)
+
+model_path = config.get("model_path", "yolo12n.pt")
+conf_thesh = config.get("conf_thesh", 0.5)
+iou_thesh = config.get("iou_thesh", 0.5)
+max_det = config.get("max_det", 80)
+imgsz = config.get("imgsz", 640)
+verbose = config.get("verbose", True)
+
+model = OpenVINOYOLODetector(model_path)
 
 cap = cv2.VideoCapture(0)
-cap.set(3,1280)
-cap.set(4,720)
+cap.set(3,640)
+cap.set(4,480)
 
 if not cap.isOpened():
     raise RuntimeError("Cannot open camera")
 
 img = cv2.imread("image.jpg")
-model.predict(img, conf=0.25, iou=0.7, max_det=80, verbose=False)
+model.predict(img, conf=conf_thesh, iou=iou_thesh, max_det=max_det, verbose=verbose)
 
 while True:
     ret, frame = cap.read()
@@ -19,17 +30,18 @@ while True:
     if not ret:
         break
 
-    results = model.predict(frame, conf=0.7, iou=0.8, max_det=80, verbose=False)
-    r = results[0]
+    results = model.predict(frame, conf=conf_thesh, iou=iou_thesh, max_det=max_det, verbose=verbose)
+    
+    r = results[0].numpy()
 
     boxes = r.boxes
     names = r.names
 
     if boxes is not None:
 
-        xyxy = boxes.xyxy.cpu().numpy()
-        conf = boxes.conf.cpu().numpy()
-        cls  = boxes.cls.cpu().numpy()
+        xyxy = boxes.xyxy
+        conf = boxes.conf
+        cls  = boxes.cls
 
         for box, score, c in zip(xyxy, conf, cls):
 

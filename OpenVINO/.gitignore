@@ -4,3 +4,4 @@ venv/
 kernel.errors.txt
 __pycache__
 train*/
+yolo-config.json

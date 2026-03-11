@@ -76,14 +76,28 @@ class OpenVINOYOLODetector:
         print("Using device:", self.device)
 
     def predict(self, frame, conf=0.25, iou=0.7, max_det=80, verbose=True):
-
-        results = self.model(
+        
+        results = self.model.predict(
             source=frame,
             conf=conf,
             iou=iou,
             max_det=max_det,
             device=self.device,
-            verbose=verbose
+            verbose=verbose,
+        )
+
+        return results
+    
+    def track(self, frame, conf=0.25, iou=0.7, max_det=80, verbose=True):
+        
+        results = self.model.track(
+            source=frame,
+            conf=conf,
+            iou=iou,
+            max_det=max_det,
+            device=self.device,
+            verbose=verbose,
+            persist=True
         )
 
         return results
