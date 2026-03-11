@@ -66,7 +66,7 @@ while True:
     # ================================
 
     timestamp_ms = int(time.time() * 1000)
-    result = detector.detect_for_video(mp_image, timestamp_ms)
+    hand_result = detector.detect_for_video(mp_image, timestamp_ms)
     # ================================
     # Process hands
     # ================================
