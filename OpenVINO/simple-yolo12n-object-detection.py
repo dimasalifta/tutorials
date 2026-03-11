@@ -37,7 +37,7 @@ while True:
     boxes = r.boxes
     names = r.names
 
-    if boxes is not None:
+    if boxes is not None and len(boxes) > 0:
 
         xyxy = boxes.xyxy
         conf = boxes.conf
@@ -46,13 +46,17 @@ while True:
         for box, score, c in zip(xyxy, conf, cls):
 
             x1, y1, x2, y2 = map(int, box)
+
             try:
                 label = names[int(c)]
-            except Exception as e:
-                label = str(f"Unknown {c}:")
+            except Exception:
+                label = f"Unknown {c}"
 
             text = f"{label} {score:.2f}"
 
+            # -----------------------------
+            # Draw bounding box (GREEN)
+            # -----------------------------
             cv2.rectangle(
                 frame,
                 (x1, y1),
@@ -61,13 +65,48 @@ while True:
                 2
             )
 
+            # -----------------------------
+            # Draw centroid (BLUE DOT)
+            # -----------------------------
+            cx = int((x1 + x2) / 2)
+            cy = int((y1 + y2) / 2)
+
+            cv2.circle(
+                frame,
+                (cx, cy),
+                4,
+                (255,0,0),
+                -1
+            )
+
+            # -----------------------------
+            # Text background rectangle
+            # -----------------------------
+            (w, h), _ = cv2.getTextSize(
+                text,
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.6,
+                2
+            )
+
+            cv2.rectangle(
+                frame,
+                (x1, y1 - h - 10),
+                (x1 + w, y1),
+                (0,255,0),
+                -1
+            )
+
+            # -----------------------------
+            # Draw label text (WHITE)
+            # -----------------------------
             cv2.putText(
                 frame,
                 text,
-                (x1, y1 - 10),
+                (x1, y1 - 5),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.6,
-                (0,255,0),
+                (255,255,255),
                 2
             )
 

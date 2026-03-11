@@ -67,7 +67,7 @@ class OpenVINOYOLODetector:
                 format="openvino",
                 dynamic=True,
                 half=True,
-                nms=True,
+                nms=False,
                 batch=1
             )
 
