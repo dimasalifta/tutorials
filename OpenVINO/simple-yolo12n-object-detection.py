@@ -34,7 +34,6 @@ while True:
         for box, score, c in zip(xyxy, conf, cls):
 
             x1, y1, x2, y2 = map(int, box)
-            print(c)
             try:
                 label = names[int(c)]
             except Exception as e:

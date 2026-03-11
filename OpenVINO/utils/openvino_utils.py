@@ -36,7 +36,7 @@ class OpenVINODeviceManager:
 
 class OpenVINOYOLODetector:
 
-    def __init__(self, model_name="yolo11n", device=None):
+    def __init__(self, model_name="yolo12n", device=None):
 
         if ".pt" in model_name:
             model_name = model_name.split(".")[0]   
@@ -67,7 +67,8 @@ class OpenVINOYOLODetector:
                 format="openvino",
                 dynamic=True,
                 half=True,
-                nms=True
+                nms=True,
+                batch=1
             )
 
         self.model = YOLO(self.ov_model_dir, task="detect")
