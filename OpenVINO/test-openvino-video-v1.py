@@ -65,7 +65,7 @@ det_model.predictor.model.pt = False
 # bisa diganti RTSP / file
 video_source = 0
 
-cap = cv2.VideoCapture(video_source)
+cap = cv2.VideoCapture(video_source, cv2.CAP_DSHOW)
 
 if not cap.isOpened():
     raise RuntimeError("Cannot open video source")
