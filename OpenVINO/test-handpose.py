@@ -1,3 +1,4 @@
+import time
 import cv2
 import mediapipe as mp
 from mediapipe.tasks import python
@@ -14,6 +15,7 @@ base_options = python.BaseOptions(model_asset_path=model_path)
 options = vision.HandLandmarkerOptions(
     base_options=base_options,
     num_hands=4,
+    running_mode=vision.RunningMode.VIDEO
 )
 
 detector = vision.HandLandmarker.create_from_options(options)
@@ -50,7 +52,8 @@ while cap.isOpened():
     # Inference
     # ================================
 
-    result = detector.detect(mp_image)
+    timestamp_ms = int(time.time() * 1000)
+    result = detector.detect_for_video(mp_image, timestamp_ms)
 
     ada_di_bbox = False
 
