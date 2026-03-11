@@ -3,3 +3,4 @@ venv/
 *_openvino_model/
 kernel.errors.txt
 __pycache__
+train*/

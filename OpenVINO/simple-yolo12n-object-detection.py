@@ -1,9 +1,11 @@
 import cv2
 from utils.openvino_utils import OpenVINOYOLODetector
 
-model = OpenVINOYOLODetector("yolo12n.pt")
+model = OpenVINOYOLODetector("train9/weights/best.pt")
 
 cap = cv2.VideoCapture(0)
+cap.set(3,1280)
+cap.set(4,720)
 
 if not cap.isOpened():
     raise RuntimeError("Cannot open camera")
@@ -17,7 +19,7 @@ while True:
     if not ret:
         break
 
-    results = model.predict(frame, conf=0.25, iou=0.7, max_det=80, verbose=True)
+    results = model.predict(frame, conf=0.7, iou=0.8, max_det=80, verbose=False)
     r = results[0]
 
     boxes = r.boxes
@@ -32,8 +34,12 @@ while True:
         for box, score, c in zip(xyxy, conf, cls):
 
             x1, y1, x2, y2 = map(int, box)
+            print(c)
+            try:
+                label = names[int(c)]
+            except Exception as e:
+                label = str(f"Unknown {c}:")
 
-            label = names[int(c)]
             text = f"{label} {score:.2f}"
 
             cv2.rectangle(
